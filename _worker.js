@@ -2,8 +2,8 @@ name = "motorcore-parts"
 main = "_worker.js"
 compatibility_date = "2024-09-23"
 
-[assets]
-directory = "public"
+[site]
+bucket = "."
 
 [[d1_databases]]
 binding = "DB"
