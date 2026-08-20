@@ -1,11 +1,13 @@
-name = "motorcore-parts"
-main = "_worker.js"
-compatibility_date = "2024-09-23"
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
 
-[assets]
-directory = "."
+    // Serve static assets automatically
+    if (env.ASSETS) {
+      const response = await env.ASSETS.fetch(request);
+      if (response.status !== 404) return response;
+    }
 
-[[d1_databases]]
-binding = "DB"
-database_name = "motorcore-parts-db"
-database_id = "02c88b43-d8f8-43f9-ab18-7211..."
+    return new Response("Not Found", { status: 404 });
+  }
+};
