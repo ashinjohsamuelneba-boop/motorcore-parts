@@ -3,3 +3,8 @@ compatibility_date = "2026-08-20"
 
 [assets]
 directory = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "motorcore-parts-db"
+database_id = "motorcore-parts-db"
