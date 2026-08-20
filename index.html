@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MotorCore Parts | Chevy, Ford & Toyota</title>
+  <meta name="description" content="Chevy, Ford and Toyota replacement parts. Search by vehicle, part and part number.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="#"><span>MC</span> MotorCore Parts</a>
+    <nav>
+      <a href="#inventory">Inventory</a>
+      <a href="#brands">Brands</a>
+      <a href="#request">Request a Part</a>
+      <a href="admin.html" class="admin-link">Admin</a>
+    </nav>
+    <a class="phone" href="tel:+18005550199">Call: (800) 555-0199</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">CHEVY • FORD • TOYOTA</div>
+      <h1>Quality parts.<br><em>Right vehicle.</em></h1>
+      <p>Find engines, transmissions, body parts, electrical components and more. Nationwide shipping available.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#inventory">Shop Parts</a>
+        <a class="btn secondary" href="#request">Request a Part</a>
+      </div>
+      <div class="trust"><span>✓ Tested inventory</span><span>✓ Fast response</span><span>✓ Shipping available</span></div>
+    </div>
+    <div class="search-card">
+      <h2>Find your part</h2>
+      <p>Search our current inventory by make, model, year or part.</p>
+      <input id="search" type="search" placeholder="e.g. 2018 F-150 transmission">
+      <div class="filters">
+        <select id="make"><option value="">All makes</option><option>Chevrolet</option><option>Ford</option><option>Toyota</option></select>
+        <select id="category"><option value="">All parts</option><option>Transmission</option><option>Engine</option><option>Alternator</option><option>Starter</option><option>Headlight</option><option>Body Part</option></select>
+      </div>
+      <button class="btn primary full" onclick="applyFilters()">Search Inventory</button>
+    </div>
+  </div>
+</section>
+
+<section id="brands" class="brands">
+  <div class="container">
+    <div class="section-head"><div><span class="eyebrow">SHOP BY MAKE</span><h2>Popular brands</h2></div></div>
+    <div class="brand-grid">
+      <button onclick="chooseMake('Chevrolet')"><b>CHEVROLET</b><small>Silverado • Tahoe • Equinox</small></button>
+      <button onclick="chooseMake('Ford')"><b>FORD</b><small>F-150 • Escape • Explorer</small></button>
+      <button onclick="chooseMake('Toyota')"><b>TOYOTA</b><small>Camry • RAV4 • Tacoma</small></button>
+    </div>
+  </div>
+</section>
+
+<section id="inventory" class="inventory">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">CURRENT INVENTORY</span><h2>Parts ready to sell</h2></div>
+      <span id="count" class="count"></span>
+    </div>
+    <div id="products" class="product-grid"></div>
+  </div>
+</section>
+
+<section id="request" class="request">
+  <div class="container request-grid">
+    <div>
+      <span class="eyebrow">CAN'T FIND IT?</span>
+      <h2>Request a specific part.</h2>
+      <p>Tell us the vehicle and part you need. We'll check availability and get back to you.</p>
+      <div class="contact-box"><strong>Need it fast?</strong><br>Call or WhatsApp us with your VIN and part number.</div>
+    </div>
+    <form id="requestForm" class="form-card">
+      <input required name="name" placeholder="Your name">
+      <input required name="phone" placeholder="Phone / WhatsApp">
+      <div class="two"><input name="year" placeholder="Year"><input name="model" placeholder="Make & model"></div>
+      <input required name="part" placeholder="Part needed">
+      <textarea name="details" rows="4" placeholder="Engine, transmission, VIN, condition preference, etc."></textarea>
+      <button class="btn primary full">Send Request</button>
+      <small id="formMsg"></small>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-grid">
+    <div><a class="logo" href="#"><span>MC</span> MotorCore Parts</a><p>Chevy, Ford & Toyota replacement parts.</p></div>
+    <div><b>Contact</b><a href="tel:+18005550199">(800) 555-0199</a><a href="mailto:sales@motorcoreparts.com">sales@motorcoreparts.com</a></div>
+    <div><b>Hours</b><span>Mon–Sat: 8AM–7PM</span><span>Nationwide shipping</span></div>
+  </div>
+  <div class="copyright">© 2026 MotorCore Parts. All rights reserved.</div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

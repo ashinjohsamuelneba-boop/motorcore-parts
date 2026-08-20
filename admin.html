@@ -1,0 +1,11 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MotorCore Admin</title><link rel="stylesheet" href="styles.css"></head><body>
+<header class="site-header"><div class="container nav"><a class="logo" href="index.html"><span>MC</span> MotorCore Parts</a><a href="index.html">← View store</a></div></header>
+<main class="container" style="padding:60px 0;max-width:850px"><span class="eyebrow">ADMIN AREA</span><h1 style="font-size:48px;letter-spacing:-2px">Inventory dashboard</h1>
+<div class="form-card" style="margin-top:25px"><p><b>Demo dashboard included.</b> The storefront is ready for deployment. Before launch, replace this demo with authenticated server-side admin access and connect your database.</p>
+<div class="two"><input id="adminUser" placeholder="Admin username"><input id="adminPass" type="password" placeholder="Admin password"></div>
+<button class="btn primary" onclick="login()">Sign in</button><small id="adminMsg"></small></div>
+<div id="panel" style="display:none;margin-top:30px"><h2>Add a part</h2><div class="form-card"><input id="title" placeholder="Part title"><input id="fit" placeholder="Vehicle fitment"><div class="two"><input id="price" placeholder="Price"><select id="make"><option>Chevrolet</option><option>Ford</option><option>Toyota</option></select></div><button class="btn primary" onclick="addPart()">Add to demo inventory</button><small id="addMsg"></small></div></div></main>
+<script>
+function login(){if(document.getElementById('adminUser').value&&document.getElementById('adminPass').value){document.getElementById('panel').style.display='block';document.getElementById('adminMsg').textContent='Demo access granted for this browser.'}else document.getElementById('adminMsg').textContent='Enter both fields.'}
+function addPart(){document.getElementById('addMsg').textContent='Demo part saved locally. Connect a real database for production inventory.'}
+</script></body></html>
