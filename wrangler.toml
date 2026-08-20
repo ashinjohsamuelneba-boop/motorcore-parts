@@ -7,4 +7,5 @@ directory = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "motorcore-parts-db"
-database_id = "motorcore-parts-db"
+database_id = "02c88b43-d8f8-43f9-ab1e-128a1c6a7a02"
+
