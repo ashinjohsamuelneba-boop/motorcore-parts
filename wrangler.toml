@@ -10,4 +10,4 @@ directory = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "motorcore-parts-db"
-database_id = "PASTE_YOUR_COPIED_UUID_HERE"
+database_id = 02c88b43-d8f8-43f9-ab18-72110a5aeea5
