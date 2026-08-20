@@ -15,10 +15,10 @@
   </header>
 
   <main class="container" style="padding: 40px 20px;">
-    <!-- Login Card -->
+    <!-- Login Section -->
     <div id="loginSection" class="form-card" style="max-width: 400px; margin: 40px auto;">
       <h2>Admin Login</h2>
-      <p style="color: var(--muted); margin-bottom: 20px;">Enter credentials to access inventory management.</p>
+      <p style="color: var(--muted); margin-bottom: 20px;">Enter credentials to manage inventory.</p>
       <div style="display: flex; flex-direction: column; gap: 12px;">
         <input type="text" id="adminUser" placeholder="Username (admin)" required>
         <input type="password" id="adminPass" placeholder="Password (admin123)" required>
@@ -26,24 +26,24 @@
       </div>
     </div>
 
-    <!-- Admin Panel Content -->
+    <!-- Admin Panel -->
     <div id="adminPanel" style="display: none;">
       <h2>Add New Inventory Item</h2>
       <form id="addPartForm" class="form-card" style="margin-bottom: 40px;">
         <div class="two">
-          <input type="text" id="partName" placeholder="Part Name (e.g. Starter Motor)" required>
-          <input type="text" id="partSku" placeholder="SKU (e.g. STR-FORD-013)" required>
+          <input type="text" id="partName" placeholder="Part Name" required>
+          <input type="text" id="partSku" placeholder="SKU Code" required>
         </div>
         <div class="two">
-          <input type="text" id="partCategory" placeholder="Category (e.g. Ignition, Brakes)" required>
+          <input type="text" id="partCategory" placeholder="Category" required>
           <input type="number" step="0.01" id="partPrice" placeholder="Price ($)" required>
         </div>
         <div class="two">
           <input type="number" id="partStock" placeholder="Stock Quantity" required>
-          <input type="text" id="partMake" placeholder="Make (e.g. Ford, Toyota, Chevy)">
+          <input type="text" id="partMake" placeholder="Make (e.g., Chevrolet, Ford)">
         </div>
         <textarea id="partDesc" placeholder="Description" rows="3"></textarea>
-        <button type="submit" class="btn primary">Save Part to D1 Database</button>
+        <button type="submit" class="btn primary">Save Part to Database</button>
       </form>
     </div>
   </main>
@@ -62,7 +62,7 @@
 
     document.getElementById('addPartForm')?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      alert('Part saved successfully!');
+      alert('Part saved successfully to inventory!');
       e.target.reset();
     });
   </script>
