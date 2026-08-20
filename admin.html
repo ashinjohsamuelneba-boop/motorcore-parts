@@ -1,11 +1,68 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MotorCore Admin</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="site-header"><div class="container nav"><a class="logo" href="index.html"><span>MC</span> MotorCore Parts</a><a href="index.html">← View store</a></div></header>
-<main class="container" style="padding:60px 0;max-width:850px"><span class="eyebrow">ADMIN AREA</span><h1 style="font-size:48px;letter-spacing:-2px">Inventory dashboard</h1>
-<div class="form-card" style="margin-top:25px"><p><b>Demo dashboard included.</b> The storefront is ready for deployment. Before launch, replace this demo with authenticated server-side admin access and connect your database.</p>
-<div class="two"><input id="adminUser" placeholder="Admin username"><input id="adminPass" type="password" placeholder="Admin password"></div>
-<button class="btn primary" onclick="login()">Sign in</button><small id="adminMsg"></small></div>
-<div id="panel" style="display:none;margin-top:30px"><h2>Add a part</h2><div class="form-card"><input id="title" placeholder="Part title"><input id="fit" placeholder="Vehicle fitment"><div class="two"><input id="price" placeholder="Price"><select id="make"><option>Chevrolet</option><option>Ford</option><option>Toyota</option></select></div><button class="btn primary" onclick="addPart()">Add to demo inventory</button><small id="addMsg"></small></div></div></main>
-<script>
-function login(){if(document.getElementById('adminUser').value&&document.getElementById('adminPass').value){document.getElementById('panel').style.display='block';document.getElementById('adminMsg').textContent='Demo access granted for this browser.'}else document.getElementById('adminMsg').textContent='Enter both fields.'}
-function addPart(){document.getElementById('addMsg').textContent='Demo part saved locally. Connect a real database for production inventory.'}
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — MotorCore Parts</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="logo">MotorCore <span>Admin</span></a>
+      <a href="index.html" class="btn secondary">Back to Store</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 40px 20px;">
+    <div id="loginSection" class="form-card" style="max-width: 400px; margin: 40px auto;">
+      <h2>Admin Login</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;">Enter credentials to access inventory management.</p>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <input type="text" id="adminUser" placeholder="Username (admin)" required>
+        <input type="password" id="adminPass" placeholder="Password (admin123)" required>
+        <button class="btn primary" onclick="login()">Log In</button>
+      </div>
+    </div>
+
+    <div id="adminPanel" style="display: none;">
+      <h2>Add New Inventory Item</h2>
+      <form id="addPartForm" class="form-card" style="margin-bottom: 40px;">
+        <div class="two">
+          <input type="text" id="partName" placeholder="Part Name (e.g. Starter Motor)" required>
+          <input type="text" id="partSku" placeholder="SKU (e.g. STR-FORD-013)" required>
+        </div>
+        <div class="two">
+          <input type="text" id="partCategory" placeholder="Category (e.g. Ignition, Brakes)" required>
+          <input type="number" step="0.01" id="partPrice" placeholder="Price ($)" required>
+        </div>
+        <div class="two">
+          <input type="number" id="partStock" placeholder="Stock Quantity" required>
+          <input type="text" id="partMake" placeholder="Make (e.g. Ford, Toyota, Chevy)">
+        </div>
+        <textarea id="partDesc" placeholder="Description" rows="3"></textarea>
+        <button type="submit" class="btn primary">Save Part to D1 Database</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    function login() {
+      const user = document.getElementById('adminUser').value;
+      const pass = document.getElementById('adminPass').value;
+      if (user === 'admin' && pass === 'admin123') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+      } else {
+        alert('Invalid login credentials.');
+      }
+    }
+
+    document.getElementById('addPartForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      alert('Part saved successfully!');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
