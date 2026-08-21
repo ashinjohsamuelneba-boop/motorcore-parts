@@ -1,8 +1,0 @@
-name = "motorcore-parts"
-main = "_worker.js"
-compatibility_date = "2026-08-20"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "motorcore-parts-db"
-database_id = "motorcore-parts-db"
