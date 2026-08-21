@@ -3,60 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MotorCore Parts — Quality Automotive Components &amp; Direct Support</title>
+  <title>MotorCore Admin — Inventory &amp; Quotes</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* Responsive adjustment for floating widget to avoid covering inputs */
-    .chat-widget-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 15px;
-      z-index: 999;
-      background: #2563eb;
-      color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    @media (max-width: 480px) {
-      .chat-widget-btn span.widget-text {
-        display: none; /* Collapses to an icon on mobile screens */
-      }
-      .chat-widget-btn {
-        padding: 12px;
-        border-radius: 50%;
-      }
-    }
-  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container nav-wrap">
-      <a href="index.html" class="logo">MotorCore <span>Parts</span></a>
+      <a href="index.html" class="logo">MotorCore <span>Admin Portal</span></a>
+      <a href="index.html" class="btn secondary">View Storefront</a>
     </div>
   </header>
 
-  <main class="container main-content" style="padding-bottom: 80px;">
-
-    <!-- Trust Badges Bar -->
-    <section class="trust-bar" aria-label="Key selling points">
-      <div class="trust-item">📦 Tested OEM &amp; Quality Aftermarket Stock</div>
-      <div class="trust-item">🛡️ 90-Day Fitment &amp; Parts Warranty</div>
-      <div class="trust-item">💬 SMS Support: <strong>(213) 436-2939</strong></div>
+  <main class="container main-content" style="padding-top: 30px; padding-bottom: 60px;">
+    
+    <section class="form-card" style="margin-bottom: 40px;">
+      <h2>Admin Security Verification</h2>
+      <div class="field">
+        <label for="adminKey">Admin Passcode / API Key</label>
+        <input type="password" id="adminKey" value="motorcore-admin-2026" placeholder="Enter Admin Key">
+      </div>
     </section>
 
-    <!-- Hero Banner -->
-    <section class="hero">
-      <h1>Find Genuine Automotive Parts</h1>
-      <p>Select your vehicle or search our verified inventory. Need fitment assistance? Submit a quote request and our parts specialists will follow up immediately.</p>
+    <section class="form-card">
+      <h2>Add New Stock Item</h2>
+      <form id="addPartForm">
+        <div class="two">
+          <div class="field">
+            <label for="pTitle">Part Title</label>
+            <input type="text" id="pTitle" placeholder="e.g. OEM FoMoCo Alternator" required>
+          </div>
+          <div class="field">
+            <label for="pStockId">Stock ID</label>
+            <input type="text" id="pStockId" placeholder="e.g. MC-8921-A" required>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="pOem">OEM Part Number</label>
+            <input type="text" id="pOem" placeholder="e.g. JL3Z-10346-A">
+          </div>
+          <div class="field">
+            <label for="pPrice">Price ($USD)</label>
+            <input type="number" step="0.01" id="pPrice" placeholder="185.00" required>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="pMake">Vehicle Make</label>
+            <input type="text" id="pMake" placeholder="e.g. Ford" required>
+          </div>
+          <div class="field">
+            <label for="pModel">Vehicle Model</label>
+            <input type="text" id="pModel" placeholder="e.g. F-150" required>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="field">
+            <label for="pYearStart">Start Year</label>
+            <input type="number" id="pYearStart" placeholder="2018" required>
+          </div>
+          <div class="field">
+            <label for="pYearEnd">End Year</label>
+            <input type="number" id="pYearEnd" placeholder="2021" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pDonor">Donor Vehicle Info</label>
+          <input type="text" id="pDonor" placeholder="e.g. 2019 Ford F-150 Lariat (42,100 Miles)">
+        </div>
+
+        <div class="field">
+          <label for="pImage">Image URL (Direct Link to Photo)</label>
+          <input type="url" id="pImage" placeholder="https://example.com/photo.jpg">
+        </div>
+
+        <button type="submit" class="btn primary btn-block">Publish to D1 Database</button>
+      </form>
     </section>
 
-    <!-- Vehicle Filter Bar -->
-    <section class="filter-card">
-      
+  </main>
+
+  <script>
+    document.getElementById('addPartForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const secret = document.getElementById('adminKey').value;
+      const data = {
+        title: document.getElementById('pTitle').value,
+        stock_id: document.getElementById('pStockId').value,
+        oem_number: document.getElementById('pOem').value,
+        price: parseFloat(document.getElementById('pPrice').value),
+        make: document.getElementById('pMake').value,
+        model: document.getElementById('pModel').value,
+        year_start: parseInt(document.getElementById('pYearStart').value),
+        year_end: parseInt(document.getElementById('pYearEnd').value),
+        donor_info: document.getElementById('pDonor').value,
+        image_url: document.getElementById('pImage').value,
+        condition: 'Grade A Tested'
+      };
+
+      try {
+        const res = await fetch('/api/admin/parts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Secret': secret
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          alert('Part successfully added with image!');
+          e.target.reset();
+        } else {
+          alert('Unauthorized or database error. Check secret key.');
+        }
+      } catch (err) {
+        alert('Network error communicating with API.');
+      }
+    });
+  </script>
+</body>
+</html>
