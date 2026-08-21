@@ -1,124 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MotorCore Admin — Inventory &amp; Quotes</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MotorCore Parts</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a href="index.html" class="logo">MotorCore <span>Admin Portal</span></a>
-      <a href="index.html" class="btn secondary">View Storefront</a>
-    </div>
-  </header>
 
-  <main class="container main-content" style="padding-top: 30px; padding-bottom: 60px;">
-    
-    <section class="form-card" style="margin-bottom: 40px;">
-      <h2>Admin Security Verification</h2>
-      <div class="field">
-        <label for="adminKey">Admin Passcode / API Key</label>
-        <input type="password" id="adminKey" value="motorcore-admin-2026" placeholder="Enter Admin Key">
-      </div>
-    </section>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">MotorCore<span>Parts Admin</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">View Storefront</a></li>
+            </ul>
+        </div>
+    </header>
 
-    <section class="form-card">
-      <h2>Add New Stock Item</h2>
-      <form id="addPartForm">
-        <div class="two">
-          <div class="field">
-            <label for="pTitle">Part Title</label>
-            <input type="text" id="pTitle" placeholder="e.g. OEM FoMoCo Alternator" required>
-          </div>
-          <div class="field">
-            <label for="pStockId">Stock ID</label>
-            <input type="text" id="pStockId" placeholder="e.g. MC-8921-A" required>
-          </div>
+    <main class="container" style="padding: 40px 20px;">
+        
+        <!-- Login Form Container (Shown if not logged in) -->
+        <div id="login-container" style="max-width: 400px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 8px;">
+            <h2 style="margin-bottom: 20px; text-align: center;">Admin Login</h2>
+            <form id="admin-login-form" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" id="admin-user" placeholder="Username" required style="padding: 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                <input type="password" id="admin-pass" placeholder="Password" required style="padding: 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                <button type="submit" style="background: var(--accent); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Secure Login</button>
+            </form>
         </div>
 
-        <div class="two">
-          <div class="field">
-            <label for="pOem">OEM Part Number</label>
-            <input type="text" id="pOem" placeholder="e.g. JL3Z-10346-A">
-          </div>
-          <div class="field">
-            <label for="pPrice">Price ($USD)</label>
-            <input type="number" step="0.01" id="pPrice" placeholder="185.00" required>
-          </div>
+        <!-- Admin Dashboard Container (Shown after authentication) -->
+        <div id="admin-dashboard-container" style="display: none; display: flex; flex-direction: column; gap: 30px;">
+            
+            <!-- Section: Add New Part -->
+            <div style="background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 8px;">
+                <h3 style="margin-bottom: 15px; border-left: 4px solid var(--accent); padding-left: 10px;">Add New Auto Part</h3>
+                <form id="add-part-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <input type="text" id="part-sku" placeholder="SKU / Part Number" required style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="text" id="part-name" placeholder="Part Name (e.g. Brake Pads)" required style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="text" id="part-category" placeholder="Category (e.g. Brakes)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    
+                    <select id="part-make" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                        <option value="Ford">Ford</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Toyota">Toyota</option>
+                    </select>
+
+                    <input type="text" id="part-model" placeholder="Vehicle Model (e.g. Camry)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="number" id="part-year-start" placeholder="Year Start (e.g. 2015)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="number" id="part-year-end" placeholder="Year End (e.g. 2020)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="number" step="0.01" id="part-price" placeholder="Price ($)" required style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="number" id="part-stock" placeholder="Stock Quantity" value="1" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    <input type="text" id="part-image" placeholder="Image URL (Unsplash or direct link)" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                    
+                    <select id="part-condition" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                        <option value="New">New</option>
+                        <option value="Used / Refurbished">Used / Refurbished</option>
+                    </select>
+
+                    <select id="part-availability" style="padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-dark); color: var(--text-main);">
+                        <option value="In Stock">In Stock</option>
+                        <option value="Out of Stock">Out of Stock</option>
+                    </select>
+
+                    <button type="submit" style="grid-column: 1 / -1; background: var(--accent); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Save Part to Catalog</button>
+                </form>
+            </div>
+
+            <!-- Section: Buyer Inquiries -->
+            <div style="background: var(--card-bg); border: 1px solid var(--border); padding: 25px; border-radius: 8px;">
+                <h3 style="margin-bottom: 15px; border-left: 4px solid var(--accent); padding-left: 10px;">Customer Inquiries & Requests</h3>
+                <div id="admin-inquiries-list">
+                    <p style="color: var(--muted);">Loading inquiries...</p>
+                </div>
+            </div>
+
         </div>
 
-        <div class="two">
-          <div class="field">
-            <label for="pMake">Vehicle Make</label>
-            <input type="text" id="pMake" placeholder="e.g. Ford" required>
-          </div>
-          <div class="field">
-            <label for="pModel">Vehicle Model</label>
-            <input type="text" id="pModel" placeholder="e.g. F-150" required>
-          </div>
-        </div>
+    </main>
 
-        <div class="two">
-          <div class="field">
-            <label for="pYearStart">Start Year</label>
-            <input type="number" id="pYearStart" placeholder="2018" required>
-          </div>
-          <div class="field">
-            <label for="pYearEnd">End Year</label>
-            <input type="number" id="pYearEnd" placeholder="2021" required>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="pDonor">Donor Vehicle Info</label>
-          <input type="text" id="pDonor" placeholder="e.g. 2019 Ford F-150 Lariat (42,100 Miles)">
-        </div>
-
-        <button type="submit" class="btn primary btn-block">Publish to D1 Database</button>
-      </form>
-    </section>
-
-  </main>
-
-  <script>
-    document.getElementById('addPartForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const secret = document.getElementById('adminKey').value;
-      const data = {
-        title: document.getElementById('pTitle').value,
-        stock_id: document.getElementById('pStockId').value,
-        oem_number: document.getElementById('pOem').value,
-        price: parseFloat(document.getElementById('pPrice').value),
-        make: document.getElementById('pMake').value,
-        model: document.getElementById('pModel').value,
-        year_start: parseInt(document.getElementById('pYearStart').value),
-        year_end: parseInt(document.getElementById('pYearEnd').value),
-        donor_info: document.getElementById('pDonor').value,
-        condition: 'Grade A Tested'
-      };
-
-      try {
-        const res = await fetch('/api/admin/parts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Admin-Secret': secret
-          },
-          body: JSON.stringify(data)
+    <script>
+        // Simple toggle for login vs dashboard view based on local token
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem("motorcore_admin_token");
+            if (token) {
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("admin-dashboard-container").style.display = "flex";
+            }
         });
-
-        if (res.ok) {
-          alert('Part successfully added!');
-          e.target.reset();
-        } else {
-          alert('Unauthorized or database error. Check secret key.');
-        }
-      } catch (err) {
-        alert('Network error communicating with API.');
-      }
-    });
-  </script>
+    </script>
+    <script src="app.js"></script>
 </body>
 </html>
