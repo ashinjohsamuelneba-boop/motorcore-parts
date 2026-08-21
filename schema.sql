@@ -1,4 +1,5 @@
--- Inventory management for automotive parts
+-- MotorCore Parts Database Schema
+
 CREATE TABLE IF NOT EXISTS parts (
     id TEXT PRIMARY KEY,
     sku TEXT UNIQUE NOT NULL,
@@ -10,41 +11,28 @@ CREATE TABLE IF NOT EXISTS parts (
     vehicle_year_end INTEGER,
     price REAL NOT NULL,
     stock_quantity INTEGER NOT NULL DEFAULT 0,
+    image_url TEXT,
+    condition TEXT DEFAULT 'New',
+    availability TEXT DEFAULT 'In Stock',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Customer requests for hard-to-find or specific parts
 CREATE TABLE IF NOT EXISTS customer_requests (
     id TEXT PRIMARY KEY,
     customer_name TEXT NOT NULL,
     customer_email TEXT NOT NULL,
+    customer_phone TEXT,
+    location TEXT,
+    delivery_preference TEXT,
     part_description TEXT NOT NULL,
     vehicle_details TEXT,
-    -- Admin users table for secure login
-CREATE TABLE IF NOT EXISTS admins (
-    id TEXT PRIMARY KEY,
-    username TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);-- Admin users table for secure login
-CREATE TABLE IF NOT EXISTS admins (
-    id TEXT PRIMARY KEY,
-    username TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
     status TEXT DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Generated quotes linked to requests
-CREATE TABLE IF NOT EXISTS quotes (
+CREATE TABLE IF NOT EXISTS admins (
     id TEXT PRIMARY KEY,
-    request_id TEXT REFERENCES customer_requests(id),
-    total_amount REAL NOT NULL,
-    status TEXT DEFAULT 'Draft',
-    expires_at TIMESTAMP,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
