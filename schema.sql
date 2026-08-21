@@ -20,6 +20,14 @@ CREATE TABLE IF NOT EXISTS customer_requests (
     customer_email TEXT NOT NULL,
     part_description TEXT NOT NULL,
     vehicle_details TEXT,
+    -- Admin users table for secure login
+CREATE TABLE IF NOT EXISTS admins (
+    id TEXT PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
     status TEXT DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
