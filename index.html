@@ -1,130 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MotorCore Admin — Inventory &amp; Quotes</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorcore Parts - Find Quality Auto Parts</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #d9381e; --dark: #121824; --light: #f4f6f8; --gray: #6c757d; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background: var(--dark); color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        header .logo { font-size: 1.5rem; font-weight: bold; }
+        header .logo span { color: var(--primary); }
+        nav a { color: white; text-decoration: none; margin-left: 1.5rem; font-weight: 500; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1200&q=80') center/cover; color: white; text-align: center; padding: 4rem 1rem; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .filter-box { background: white; max-width: 900px; margin: -2rem auto 2rem; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: var(--dark); }
+        .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        select, input, button { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.95rem; }
+        button.btn-primary { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button.btn-primary:hover { background: #b82b14; }
+        .container { max-width: 1200px; margin: auto; padding: 2rem 1rem; }
+        .section-title { font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center; }
+        .parts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+        .part-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+        .part-card img { width: 100%; height: 180px; object-fit: cover; }
+        .part-details { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .part-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .part-meta { font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem; }
+        .part-price { font-weight: bold; color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 1rem; z-index: 1000; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .close-btn { cursor: pointer; font-size: 1.5rem; }
+        footer { background: var(--dark); color: white; text-align: center; padding: 2rem 1rem; margin-top: 3rem; font-size: 0.9rem; }
+    </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a href="index.html" class="logo">MotorCore <span>Admin Portal</span></a>
-      <a href="index.html" class="btn secondary">View Storefront</a>
+
+    <header>
+        <div class="logo">Motorcore <span>Parts</span></div>
+        <nav>
+            <a href="#catalog">Catalog</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="admin.html">Admin Portal</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Find the Right Auto Part for Your Vehicle</h1>
+        <p>Quality Ford, Chevrolet, Toyota, and Other Parts Available</p>
+    </section>
+
+    <div class="filter-box">
+        <h3>Find Parts For Your Vehicle</h3>
+        <div class="filter-grid">
+            <select id="filter-make"><option value="">Select Make</option></select>
+            <select id="filter-category"><option value="">Select Category</option></select>
+            <input type="text" id="filter-search" placeholder="Search part name or #...">
+            <button class="btn-primary" onclick="loadParts()">Search Parts</button>
+        </div>
     </div>
-  </header>
 
-  <main class="container main-content" style="padding-top: 30px; padding-bottom: 60px;">
-    
-    <section class="form-card" style="margin-bottom: 40px;">
-      <h2>Admin Security Verification</h2>
-      <div class="field">
-        <label for="adminKey">Admin Passcode / API Key</label>
-        <input type="password" id="adminKey" value="motorcore-admin-2026" placeholder="Enter Admin Key">
-      </div>
-    </section>
-
-    <section class="form-card">
-      <h2>Add New Stock Item</h2>
-      <form id="addPartForm">
-        <div class="two">
-          <div class="field">
-            <label for="pTitle">Part Title</label>
-            <input type="text" id="pTitle" placeholder="e.g. OEM FoMoCo Alternator" required>
-          </div>
-          <div class="field">
-            <label for="pStockId">Stock ID</label>
-            <input type="text" id="pStockId" placeholder="e.g. MC-8921-A" required>
-          </div>
+    <div class="container" id="catalog">
+        <h2 class="section-title">Available Parts Inventory</h2>
+        <div class="parts-grid" id="parts-container">
+            <p style="text-align: center; grid-column: 1/-1;">Loading parts...</p>
         </div>
+    </div>
 
-        <div class="two">
-          <div class="field">
-            <label for="pOem">OEM Part Number</label>
-            <input type="text" id="pOem" placeholder="e.g. JL3Z-10346-A">
-          </div>
-          <div class="field">
-            <label for="pPrice">Price ($USD)</label>
-            <input type="number" step="0.01" id="pPrice" placeholder="185.00" required>
-          </div>
+    <!-- Inquiry Modal -->
+    <div class="modal" id="inquiryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Inquire About This Part</h3>
+                <span class="close-btn" onclick="closeInquiryModal()">&times;</span>
+            </div>
+            <p id="inquiry-part-name" style="font-weight: bold; margin-bottom: 1rem; color: var(--primary);"></p>
+            <form id="inquiryForm" onsubmit="submitInquiry(event)">
+                <input type="hidden" id="inquiry-part-id">
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <input type="text" id="cust-name" placeholder="Full Name *" required>
+                    <input type="email" id="cust-email" placeholder="Email Address *" required>
+                    <input type="tel" id="cust-phone" placeholder="Phone Number *" required>
+                    <input type="text" id="cust-zip" placeholder="ZIP / Postal Code">
+                    <textarea id="cust-message" rows="3" placeholder="Message or compatibility details..."></textarea>
+                    <button type="submit" class="btn-primary">Submit Inquiry</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="two">
-          <div class="field">
-            <label for="pMake">Vehicle Make</label>
-            <input type="text" id="pMake" placeholder="e.g. Ford" required>
-          </div>
-          <div class="field">
-            <label for="pModel">Vehicle Model</label>
-            <input type="text" id="pModel" placeholder="e.g. F-150" required>
-          </div>
-        </div>
+    <footer>
+        <p>&copy; 2026 Motorcore Parts. Submitting an inquiry confirms request only; payment details are provided directly after order confirmation.</p>
+    </footer>
 
-        <div class="two">
-          <div class="field">
-            <label for="pYearStart">Start Year</label>
-            <input type="number" id="pYearStart" placeholder="2018" required>
-          </div>
-          <div class="field">
-            <label for="pYearEnd">End Year</label>
-            <input type="number" id="pYearEnd" placeholder="2021" required>
-          </div>
-        </div>
+    <script>
+        let selectedPart = null;
 
-        <div class="field">
-          <label for="pDonor">Donor Vehicle Info</label>
-          <input type="text" id="pDonor" placeholder="e.g. 2019 Ford F-150 Lariat (42,100 Miles)">
-        </div>
+        async function loadOptions() {
+            try {
+                const res = await fetch('/api/options');
+                const data = await res.json();
+                
+                const makeSelect = document.getElementById('filter-make');
+                data.makes.forEach(m => {
+                    makeSelect.innerHTML += `<option value="${m.slug}">${m.name}</option>`;
+                });
 
-        <div class="field">
-          <label for="pImage">Image URL (Direct Link to Photo)</label>
-          <input type="url" id="pImage" placeholder="https://example.com/photo.jpg">
-        </div>
-
-        <button type="submit" class="btn primary btn-block">Publish to D1 Database</button>
-      </form>
-    </section>
-
-  </main>
-
-  <script>
-    document.getElementById('addPartForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const secret = document.getElementById('adminKey').value;
-      const data = {
-        title: document.getElementById('pTitle').value,
-        stock_id: document.getElementById('pStockId').value,
-        oem_number: document.getElementById('pOem').value,
-        price: parseFloat(document.getElementById('pPrice').value),
-        make: document.getElementById('pMake').value,
-        model: document.getElementById('pModel').value,
-        year_start: parseInt(document.getElementById('pYearStart').value),
-        year_end: parseInt(document.getElementById('pYearEnd').value),
-        donor_info: document.getElementById('pDonor').value,
-        image_url: document.getElementById('pImage').value,
-        condition: 'Grade A Tested'
-      };
-
-      try {
-        const res = await fetch('/api/admin/parts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Admin-Secret': secret
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (res.ok) {
-          alert('Part successfully added with image!');
-          e.target.reset();
-        } else {
-          alert('Unauthorized or database error. Check secret key.');
+                const catSelect = document.getElementById('filter-category');
+                data.categories.forEach(c => {
+                    catSelect.innerHTML += `<option value="${c.slug}">${c.name}</option>`;
+                });
+            } catch (e) { console.error(e); }
         }
-      } catch (err) {
-        alert('Network error communicating with API.');
-      }
-    });
-  </script>
+
+        async function loadParts() {
+            const make = document.getElementById('filter-make').value;
+            const category = document.getElementById('filter-category').value;
+            const search = document.getElementById('filter-search').value;
+
+            const container = document.getElementById('parts-container');
+            container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Searching...</p>';
+
+            try {
+                const res = await fetch(`/api/parts?make=${make}&category=${category}&search=${encodeURIComponent(search)}`);
+                const data = await res.json();
+
+                if (!data.parts || data.parts.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No parts found matching your criteria.</p>';
+                    return;
+                }
+
+                container.innerHTML = data.parts.map(p => {
+                    let images = [];
+                    try { images = JSON.parse(p.images); } catch(e){}
+                    const imgUrl = images[0] || 'https://via.placeholder.com/300x200?text=Auto+Part';
+                    const priceText = p.display_price_as_request ? 'Request Price' : `$${p.price.toFixed(2)}`;
+
+                    return `
+                        <div class="part-card">
+                            <img src="${imgUrl}" alt="${p.title}">
+                            <div class="part-details">
+                                <div>
+                                    <div class="part-title">${p.title}</div>
+                                    <div class="part-meta">${p.year_start}-${p.year_end} ${p.make_name || ''} ${p.model} | #${p.part_number || 'N/A'}</div>
+                                </div>
+                                <div>
+                                    <div class="part-price">${priceText}</div>
+                                    <button class="btn-primary" onclick="openInquiryModal(${p.id}, '${p.title.replace(/'/g, "\\'")}')">Inquire About Part</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Error loading parts.</p>';
+            }
+        }
+
+        function openInquiryModal(id, title) {
+            document.getElementById('inquiry-part-id').value = id;
+            document.getElementById('inquiry-part-name').innerText = title;
+            document.getElementById('inquiryModal').style.display = 'flex';
+        }
+
+        function closeInquiryModal() {
+            document.getElementById('inquiryModal').style.display = 'none';
+        }
+
+        async function submitInquiry(e) {
+            e.preventDefault();
+            const payload = {
+                part_id: document.getElementById('inquiry-part-id').value,
+                customer_name: document.getElementById('cust-name').value,
+                email: document.getElementById('cust-email').value,
+                phone: document.getElementById('cust-phone').value,
+                zip_code: document.getElementById('cust-zip').value,
+                message: document.getElementById('cust-message').value
+            };
+
+            try {
+                const res = await fetch('/api/inquiries', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    alert('Your inquiry has been submitted! We will contact you directly with availability and payment instructions.');
+                    closeInquiryModal();
+                    document.getElementById('inquiryForm').reset();
+                } else {
+                    alert('Submission failed. Please try again.');
+                }
+            } catch (err) { alert('Error submitting inquiry.'); }
+        }
+
+        window.onload = () => { loadOptions(); loadParts(); };
+    </script>
 </body>
 </html>
