@@ -125,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (result.success) {
                     alert("Part added successfully!");
                     addPartForm.reset();
-                    loadPartsAdmin();
                 } else {
                     alert("Error: " + result.error);
                 }
@@ -197,16 +196,39 @@ async function loadAdminInquiries() {
             return;
         }
         container.innerHTML = inquiries.map(inq => `
-            <div style="background:var(--bg-dark); border:1px solid var(--border); padding:15px; border-radius:6px; margin-bottom:10px;">
+            <div style="background:var(--bg-dark); border:1px solid var(--border); padding:15px; border-radius:6px; margin-bottom:12px;">
                 <p><strong>Customer:</strong> ${inq.customer_name} (${inq.customer_email}, ${inq.customer_phone || 'No Phone'})</p>
                 <p><strong>Part Requested:</strong> ${inq.part_description}</p>
                 <p><strong>Location / Delivery:</strong> ${inq.location || 'N/A'} via ${inq.delivery_preference}</p>
                 <p><strong>Message:</strong> ${inq.vehicle_details || 'None'}</p>
-                <p style="font-size:0.85rem; color:var(--muted); margin-top:5px;">Status: ${inq.status} | Date: ${inq.created_at}</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px;">
+                    <span style="font-size:0.85rem; color:var(--muted);">Status: <strong>${inq.status}</strong></span>
+                    <div style="display: flex; gap: 5px;">
+                        <button onclick="updateInquiryStatus('${inq.id}', 'Contacted')" style="background:var(--accent); color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.8rem; cursor:pointer;">Mark Contacted</button>
+                        <button onclick="updateInquiryStatus('${inq.id}', 'Completed')" style="background:#10b981; color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.8rem; cursor:pointer;">Mark Completed</button>
+                    </div>
+                </div>
             </div>
         `).join("");
     } catch (err) {
         container.innerHTML = `<p style="color:var(--muted);">Failed to load inquiries.</p>`;
     }
 }
-  
+
+async function updateInquiryStatus(id, status) {
+    try {
+        const res = await fetch(`/api/admin/inquiries/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status })
+        });
+        const result = await res.json();
+        if (result.success) {
+            loadAdminInquiries();
+        } else {
+            alert("Error updating status");
+        }
+    } catch (err) {
+        alert("Network error updating status");
+    }
+}
