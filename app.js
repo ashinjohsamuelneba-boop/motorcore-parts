@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const partsGrid = document.getElementById('partsGrid');
   const requestForm = document.getElementById('requestFormInner');
 
-  // Fetch Inventory from D1 API with static fallback
   async function loadInventory() {
     try {
       const response = await fetch('/api/parts');
@@ -14,14 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (err) {
       console.warn('Using fallback inventory:', err.message);
-      // Retains static HTML content on fetch failure
     }
   }
 
   function renderParts(parts) {
     if (!partsGrid) return;
     partsGrid.innerHTML = parts.map(part => `
-      <article class="part-card" style="border: 1px solid rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; background: #1e293b;">
+      <article class="part-card" style="border: 1px solid rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; background: #1e293b; display: flex; flex-direction: column; gap: 15px;">
+        
+        ${part.image_url ? `
+          <div style="width: 100%; height: 200px; overflow: hidden; border-radius: 8px; background: #0f172a;">
+            <img src="${part.image_url}" alt="${part.title}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        ` : ''}
+
         <div class="part-card-info">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
             <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.75rem;">IN STOCK & TESTED</span>
@@ -49,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // Submit Quotes to Backend API
   if (requestForm) {
     requestForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -73,13 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (res.ok) {
-          alert('Quote request submitted! Our team will contact you shortly.');
+          alert('Quote request submitted!');
           requestForm.reset();
         } else {
           throw new Error('Server error');
         }
       } catch (err) {
-        alert('Request recorded! You can also text us directly at (213) 436-2939 for instant support.');
+        alert('Request recorded! You can also text us directly at (213) 436-2939.');
       } finally {
         btn.textContent = 'Submit Quote Request';
         btn.disabled = false;
