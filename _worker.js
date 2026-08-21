@@ -46,7 +46,6 @@ export default {
         const { username, password } = await request.json();
         
         // Check against environment variables or database admin table
-        // For simplicity and high security on Cloudflare, you can match against env.ADMIN_PASSWORD
         if (username === (env.ADMIN_USER || "admin") && password === env.ADMIN_PASSWORD) {
           return Response.json({ success: true, token: "authenticated_session_token" }, { headers: corsHeaders });
         }
@@ -60,7 +59,18 @@ export default {
         return Response.json(results, { headers: corsHeaders });
       }
 
-      // 5. Admin: Add new part
+      // 5. Admin: Update inquiry status
+      if (path.startsWith("/api/admin/inquiries/") && request.method === "PUT") {
+        const id = path.split("/").pop();
+        const data = await request.json();
+        await env.DB.prepare(
+          `UPDATE customer_requests SET status = ? WHERE id = ?`
+        ).bind(data.status, id).run();
+
+        return Response.json({ success: true, message: "Inquiry status updated!" }, { headers: corsHeaders });
+      }
+
+      // 6. Admin: Add new part
       if (path === "/api/admin/parts" && request.method === "POST") {
         const data = await request.json();
         const id = 'part_' + Date.now();
