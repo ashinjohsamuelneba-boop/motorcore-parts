@@ -205,6 +205,165 @@ select:focus, input:focus, textarea:focus {
   .two {
     grid-template-columns: 1fr;
   }
+  /* MOTORCORE PARTS - NEW AUTO PARTS DESIGN */
+:root {
+  --primary: #e53935;
+  --primary-dark: #b71c1c;
+  --dark: #111827;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --light: #f8fafc;
+  --white: #ffffff;
+}
+
+body {
+  background: #f8fafc;
+  color: var(--text);
+}
+
+header {
+  background: var(--white);
+  color: var(--dark);
+  padding: 0;
+  display: block;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+header .logo {
+  padding: 20px;
+  text-align: center;
+  font-size: 28px;
+  color: var(--dark);
+}
+
+header .logo span {
+  color: var(--primary);
+}
+
+nav {
+  background: var(--dark);
+  padding: 14px 10px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 12px;
+  font-weight: 600;
+}
+
+.hero {
+  min-height: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 70px 20px;
+  background:
+    linear-gradient(rgba(0,0,0,.68), rgba(0,0,0,.68)),
+    url('https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1600&q=85')
+    center/cover;
+}
+
+.hero h1 {
+  max-width: 850px;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  max-width: 700px;
+}
+
+.filter-box {
+  position: relative;
+  z-index: 5;
+  margin: -45px auto 40px;
+  max-width: 1050px;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 10px 35px rgba(0,0,0,.15);
+}
+
+.filter-box h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.filter-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+select,
+input,
+button {
+  min-height: 48px;
+}
+
+button.btn-primary {
+  background: var(--primary);
+}
+
+button.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+.parts-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.part-card {
+  transition: transform .2s, box-shadow .2s;
+}
+
+.part-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.13);
+}
+
+.part-card img {
+  height: 210px;
+}
+
+.part-price {
+  color: var(--primary);
+}
+
+footer {
+  background: var(--dark);
+}
+
+@media (max-width: 700px) {
+  header .logo {
+    font-size: 24px;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 5px 7px;
+    font-size: .9rem;
+  }
+
+  .hero {
+    min-height: 330px;
+    padding: 50px 15px;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-box {
+    margin: -30px 15px 30px;
+  }
+}
 }
 
 /* Footer */
