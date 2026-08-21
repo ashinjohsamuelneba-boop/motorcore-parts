@@ -28,349 +28,190 @@ body {
   padding: 0 20px;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Header */
-.site-header {
+/* Header & Navbar */
+header {
+  background-color: var(--card-bg);
   border-bottom: 1px solid var(--border);
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.nav-wrap {
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  padding: 15px 20px;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--text-main);
 }
 
 .logo span {
   color: var(--accent);
 }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
+.nav-links {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  font-size: 0.95rem;
 }
 
-.btn.primary {
-  background: var(--accent);
-  color: white;
+.nav-links a {
+  color: var(--muted);
+  transition: color 0.2s;
 }
 
-.btn.primary:hover {
-  background: var(--accent-hover);
-}
-
-.btn.secondary {
-  background: transparent;
-  border: 1px solid var(--border);
+.nav-links a:hover {
   color: var(--text-main);
 }
 
-.btn.secondary:hover {
-  background: var(--card-bg);
-}
-
-.btn-sms {
-  background: #16a34a;
-  color: white;
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Trust Bar */
-.trust-bar {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 15px;
-  background: var(--card-bg);
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  margin-bottom: 30px;
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1200&q=80');
+  background-size: cover;
+  background-position: center;
+  padding: 60px 20px;
   text-align: center;
 }
 
-.trust-item {
-  font-size: 0.9rem;
-  color: var(--muted);
-  font-weight: 500;
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-/* Filter Card */
-.filter-card {
+.hero p {
+  color: var(--muted);
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+/* Vehicle Filter Box */
+.filter-box {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  padding: 24px;
-  border-radius: 12px;
-  margin-bottom: 40px;
-}
-
-.filter-grid {
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 700px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
 }
 
-select, input, textarea {
-  width: 100%;
-  padding: 12px;
-  background: var(--bg-dark);
-  border: 1px solid var(--border);
+.filter-box select, .filter-box button {
+  padding: 10px;
   border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-dark);
   color: var(--text-main);
   font-size: 0.95rem;
 }
 
-select:focus, input:focus, textarea:focus {
-  outline: none;
-  border-color: var(--accent);
+.filter-box button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-/* Parts Grid */
+.filter-box button:hover {
+  background: var(--accent-hover);
+}
+
+/* Catalog Section */
+.catalog-section {
+  padding: 40px 20px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--accent);
+  padding-left: 10px;
+}
+
 .parts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;
 }
 
 .part-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 8px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.part-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 8px;
+.part-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: var(--border);
 }
 
-.badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--success);
-  margin-bottom: 12px;
-}
-
-/* Form Styling */
-.form-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  padding: 30px;
-  border-radius: 12px;
-}
-
-.two {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-@media (max-width: 600px) {
-  .two {
-    grid-template-columns: 1fr;
-  }
-  /* MOTORCORE PARTS - NEW AUTO PARTS DESIGN */
-:root {
-  --primary: #e53935;
-  --primary-dark: #b71c1c;
-  --dark: #111827;
-  --text: #1f2937;
-  --muted: #6b7280;
-  --light: #f8fafc;
-  --white: #ffffff;
-}
-
-body {
-  background: #f8fafc;
-  color: var(--text);
-}
-
-header {
-  background: var(--white);
-  color: var(--dark);
-  padding: 0;
-  display: block;
-  box-shadow: 0 2px 10px rgba(0,0,0,.08);
-}
-
-header .logo {
-  padding: 20px;
-  text-align: center;
-  font-size: 28px;
-  color: var(--dark);
-}
-
-header .logo span {
-  color: var(--primary);
-}
-
-nav {
-  background: var(--dark);
-  padding: 14px 10px;
-  text-align: center;
-}
-
-nav a {
-  color: white;
-  margin: 0 12px;
-  font-weight: 600;
-}
-
-.hero {
-  min-height: 390px;
+.part-info {
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 70px 20px;
-  background:
-    linear-gradient(rgba(0,0,0,.68), rgba(0,0,0,.68)),
-    url('https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=1600&q=85')
-    center/cover;
+  gap: 8px;
+  flex-grow: 1;
 }
 
-.hero h1 {
-  max-width: 850px;
-  font-size: clamp(2rem, 6vw, 4rem);
-  line-height: 1.1;
-  margin-bottom: 18px;
+.part-title {
+  font-size: 1.05rem;
+  font-weight: bold;
 }
 
-.hero p {
-  font-size: 1.15rem;
-  max-width: 700px;
-}
-
-.filter-box {
-  position: relative;
-  z-index: 5;
-  margin: -45px auto 40px;
-  max-width: 1050px;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: 0 10px 35px rgba(0,0,0,.15);
-}
-
-.filter-box h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-
-.filter-grid {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-select,
-input,
-button {
-  min-height: 48px;
-}
-
-button.btn-primary {
-  background: var(--primary);
-}
-
-button.btn-primary:hover {
-  background: var(--primary-dark);
-}
-
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 25px;
-}
-
-.parts-grid {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-.part-card {
-  transition: transform .2s, box-shadow .2s;
-}
-
-.part-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,.13);
-}
-
-.part-card img {
-  height: 210px;
+.part-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
 .part-price {
-  color: var(--primary);
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: var(--success);
+  margin-top: auto;
 }
 
-footer {
-  background: var(--dark);
+.btn-inquire {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
 }
 
-@media (max-width: 700px) {
-  header .logo {
-    font-size: 24px;
-  }
-
-  nav a {
-    display: inline-block;
-    margin: 5px 7px;
-    font-size: .9rem;
-  }
-
-  .hero {
-    min-height: 330px;
-    padding: 50px 15px;
-  }
-
-  .filter-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .filter-box {
-    margin: -30px 15px 30px;
-  }
-}
+.btn-inquire:hover {
+  background: var(--accent-hover);
 }
 
 /* Footer */
-.site-footer {
-  text-align: center;
-  padding: 30px 20px;
-  color: var(--muted);
+footer {
+  background: var(--card-bg);
   border-top: 1px solid var(--border);
-  margin-top: 60px;
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 40px;
+}
+
+@media(max-width: 600px) {
+  .nav-links {
+    display: none; /* Can be expanded for mobile menu later */
+  }
 }
