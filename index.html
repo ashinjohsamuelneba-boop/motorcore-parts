@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MotorCore Parts — Automotive Inventory & Direct Ordering</title>
+  <title>MotorCore Parts — Quality Automotive Components & Direct Support</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,51 +14,105 @@
     </div>
   </header> 
 
-  <main class="container" style="padding: 40px 20px;">
+  <main class="container" style="padding-top: 30px;">
+    <!-- Trust Badges Bar -->
+    <div class="trust-bar">
+      <div class="trust-item">📦 Direct OEM & Quality Aftermarket Stock</div>
+      <div class="trust-item">⚡ Fast Quote Turnaround & Order Processing</div>
+      <div class="trust-item">💬 SMS Support: <strong>(213) 436-2939</strong></div>
+    </div>
+
     <!-- Hero Banner -->
-    <section style="margin-bottom: 40px; text-align: center;">
-      <h1 style="font-size: 2.2rem; margin-bottom: 10px;">Automotive Parts Inventory</h1>
-      <p style="color: var(--muted); max-width: 600px; margin: 0 auto;">Browse our current stock of components or submit a custom quote request for hard-to-find vehicle parts.</p>
+    <section style="margin-bottom: 30px; text-align: center;">
+      <h1 style="font-size: 2.2rem; margin-bottom: 10px;">Find Genuine Automotive Parts</h1>
+      <p style="color: var(--muted); max-width: 600px; margin: 0 auto;">Select your vehicle or search our inventory. Need assistance? Send us a quote request directly.</p>
     </section>
 
-    <!-- Contact Info Banner -->
-    <section style="margin-bottom: 40px; text-align: center; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
-      <h3 style="margin-bottom: 8px;">Direct Contact Information</h3>
-      <p style="margin: 4px 0;"><strong>Email:</strong> <a href="mailto:wallacechristopher117@gmail.com" style="color: var(--accent, #3b82f6);">wallacechristopher117@gmail.com</a></p>
-      <p style="margin: 4px 0;"><strong>SMS / Text Only:</strong> <a href="sms:+12134362939" style="color: var(--accent, #3b82f6);">(213) 436-2939</a></p>
+    <!-- Vehicle Filter Bar -->
+    <section class="filter-card">
+      <h3 style="font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Filter By Vehicle</h3>
+      <div class="filter-grid">
+        <select id="filterYear">
+          <option value="">Select Year</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+        </select>
+        <select id="filterMake">
+          <option value="">Select Make</option>
+          <option value="Ford">Ford</option>
+          <option value="Chevrolet">Chevrolet</option>
+          <option value="Toyota">Toyota</option>
+          <option value="Honda">Honda</option>
+          <option value="BMW">BMW</option>
+        </select>
+        <select id="filterModel">
+          <option value="">Select Model</option>
+          <option value="F-150">F-150</option>
+          <option value="Silverado">Silverado</option>
+          <option value="Camry">Camry</option>
+          <option value="Civic">Civic</option>
+          <option value="3 Series">3 Series</option>
+        </select>
+        <button class="btn primary">Filter Inventory</button>
+      </div>
+    </section>
+
+    <!-- Direct Contact Highlight -->
+    <section style="margin-bottom: 40px; text-align: center; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); padding: 20px; border-radius: 10px;">
+      <h3 style="margin-bottom: 6px;">Questions or Instant Orders?</h3>
+      <p style="margin-bottom: 12px; color: var(--muted);">Reach out directly to our parts department for instant fitment verification and custom payment processing.</p>
+      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; align-items: center;">
+        <span><strong>Email:</strong> <a href="mailto:wallacechristopher117@gmail.com" style="color: var(--accent);">wallacechristopher117@gmail.com</a></span>
+        <a href="sms:+12134362939" class="btn-sms">💬 Text Us: (213) 436-2939</a>
+      </div>
     </section>
 
     <!-- Parts Inventory Grid -->
     <section>
-      <h2>Available Parts</h2>
-      <div id="partsGrid" class="parts-grid" style="margin-top: 20px;">
-        <p>Loading inventory...</p>
+      <h2 style="margin-bottom: 15px;">Available Stock</h2>
+      <div id="partsGrid" class="parts-grid">
+        <div class="part-card">
+          <div>
+            <span class="badge">In Stock</span>
+            <h3>OEM Alternator Assembly</h3>
+            <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 10px;">Part #: ALT-8921 | Fits: 2017-2021 Ford F-150</p>
+          </div>
+          <div>
+            <p style="font-size: 1.25rem; font-weight: 700; color: var(--accent); margin-bottom: 10px;">$185.00</p>
+            <a href="#requestForm" class="btn secondary" style="width: 100%; text-align: center;">Inquire / Order</a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Custom Request Form -->
-    <section class="form-card" style="margin-top: 60px;">
+    <section id="requestForm" class="form-card" style="margin-top: 60px;">
       <h2>Can't find a part? Request a Quote</h2>
-      <p style="color: var(--muted); margin-bottom: 20px;">Fill out your vehicle details and the part you need—our team will source it for you.</p>
-      <form id="requestForm">
+      <p style="color: var(--muted); margin-bottom: 20px;">Submit your vehicle details and part requirements—we'll verify fitment and get back to you with pricing.</p>
+      <form id="requestFormInner">
         <div class="two">
           <input type="text" id="reqName" placeholder="Your Full Name" required>
           <input type="email" id="reqEmail" placeholder="Email Address" required>
         </div>
         <div class="two">
-          <input type="tel" id="reqPhone" placeholder="Phone Number" required>
+          <input type="tel" id="reqPhone" placeholder="Phone Number (SMS Preferred)" required>
           <input type="text" id="reqVehicle" placeholder="Vehicle Year / Make / Model (e.g. 2018 Ford F-150)" required>
         </div>
-        <textarea id="reqDetails" placeholder="Describe the part you need (e.g. OEM alternator, part numbers if known)..." rows="3" required></textarea>
-        <button type="submit" class="btn primary">Submit Part Request</button>
+        <textarea id="reqDetails" placeholder="Describe the part you need (OEM part numbers, VIN, or specific details if known)..." rows="3" required style="margin-bottom: 15px;"></textarea>
+        <button type="submit" class="btn primary" style="width: 100%;">Submit Quote Request</button>
       </form>
     </section>
   </main>
 
   <!-- Footer Contact Info -->
-  <footer class="site-footer" style="text-align: center; padding: 20px; color: var(--muted); border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 60px;">
+  <footer class="site-footer">
     <p>&copy; MotorCore Parts. All rights reserved.</p>
-    <p style="font-size: 0.9rem; margin-top: 5px;">Contact: wallacechristopher117@gmail.com | Text/SMS: (213) 436-2939</p>
+    <p style="font-size: 0.85rem; margin-top: 5px;">Contact: wallacechristopher117@gmail.com | Text/SMS: (213) 436-2939</p>
   </footer>
 
   <script src="app.js"></script>
