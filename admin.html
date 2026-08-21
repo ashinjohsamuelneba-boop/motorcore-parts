@@ -3,67 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard — MotorCore Parts</title>
+  <title>MotorCore Admin — Inventory &amp; Quotes</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container nav-wrap">
-      <a href="index.html" class="logo">MotorCore <span>Admin</span></a>
-      <a href="index.html" class="btn secondary">Back to Store</a>
+      <a href="index.html" class="logo">MotorCore <span>Admin Portal</span></a>
+      <a href="index.html" class="btn secondary">View Storefront</a>
     </div>
   </header>
 
-  <main class="container" style="padding: 40px 20px;">
-    <!-- Login Section -->
-    <div id="loginSection" class="form-card" style="max-width: 400px; margin: 40px auto;">
-      <h2>Admin Login</h2>
-      <p style="color: var(--muted); margin-bottom: 20px;">Enter credentials to manage inventory.</p>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        <input type="text" id="adminUser" placeholder="Username (admin)" required>
-        <input type="password" id="adminPass" placeholder="Password (admin123)" required>
-        <button class="btn primary" onclick="login()">Log In</button>
+  <main class="container main-content" style="padding-top: 30px; padding-bottom: 60px;">
+    
+    <section class="form-card" style="margin-bottom: 40px;">
+      <h2>Admin Security Verification</h2>
+      <div class="field">
+        <label for="adminKey">Admin Passcode / API Key</label>
+        <input type="password" id="adminKey" value="motorcore-admin-2026" placeholder="Enter Admin Key">
       </div>
-    </div>
+    </section>
 
-    <!-- Admin Panel -->
-    <div id="adminPanel" style="display: none;">
-      <h2>Add New Inventory Item</h2>
-      <form id="addPartForm" class="form-card" style="margin-bottom: 40px;">
+    <section class="form-card">
+      <h2>Add New Stock Item</h2>
+      <form id="addPartForm">
         <div class="two">
-          <input type="text" id="partName" placeholder="Part Name" required>
-          <input type="text" id="partSku" placeholder="SKU Code" required>
+          <div class="field">
+            <label for="pTitle">Part Title</label>
+            <input type="text" id="pTitle" placeholder="e.g. OEM FoMoCo Alternator" required>
+          </div>
+          <div class="field">
+            <label for="pStockId">Stock ID</label>
+            <input type="text" id="pStockId" placeholder="e.g. MC-8921-A" required>
+          </div>
         </div>
+
         <div class="two">
-          <input type="text" id="partCategory" placeholder="Category" required>
-          <input type="number" step="0.01" id="partPrice" placeholder="Price ($)" required>
+          <div class="field">
+            <label for="pOem">OEM Part Number</label>
+            <input type="text" id="pOem" placeholder="e.g. JL3Z-10346-A">
+          </div>
+          <div class="field">
+            <label for="pPrice">Price ($USD)</label>
+            <input type="number" step="0.01" id="pPrice" placeholder="185.00" required>
+          </div>
         </div>
+
         <div class="two">
-          <input type="number" id="partStock" placeholder="Stock Quantity" required>
-          <input type="text" id="partMake" placeholder="Make (e.g., Chevrolet, Ford)">
+          <div class="field">
+            <label for="pMake">Vehicle Make</label>
+            <input type="text" id="pMake" placeholder="e.g. Ford" required>
+          </div>
+          <div class="field">
+            <label for="pModel">Vehicle Model</label>
+            <input type="text" id="pModel" placeholder="e.g. F-150" required>
+          </div>
         </div>
-        <textarea id="partDesc" placeholder="Description" rows="3"></textarea>
-        <button type="submit" class="btn primary">Save Part to Database</button>
+
+        <div class="two">
+          <div class="field">
+            <label for="pYearStart">Start Year</label>
+            <input type="number" id="pYearStart" placeholder="2018" required>
+          </div>
+          <div class="field">
+            <label for="pYearEnd">End Year</label>
+            <input type="number" id="pYearEnd" placeholder="2021" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pDonor">Donor Vehicle Info</label>
+          <input type="text" id="pDonor" placeholder="e.g. 2019 Ford F-150 Lariat (42,100 Miles)">
+        </div>
+
+        <button type="submit" class="btn primary btn-block">Publish to D1 Database</button>
       </form>
-    </div>
+    </section>
+
   </main>
 
   <script>
-    function login() {
-      const user = document.getElementById('adminUser').value;
-      const pass = document.getElementById('adminPass').value;
-      if (user === 'admin' && pass === 'admin123') {
-        document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-      } else {
-        alert('Invalid login credentials.');
-      }
-    }
-
-    document.getElementById('addPartForm')?.addEventListener('submit', async (e) => {
+    document.getElementById('addPartForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      alert('Part saved successfully to inventory!');
-      e.target.reset();
+      const secret = document.getElementById('adminKey').value;
+      const data = {
+        title: document.getElementById('pTitle').value,
+        stock_id: document.getElementById('pStockId').value,
+        oem_number: document.getElementById('pOem').value,
+        price: parseFloat(document.getElementById('pPrice').value),
+        make: document.getElementById('pMake').value,
+        model: document.getElementById('pModel').value,
+        year_start: parseInt(document.getElementById('pYearStart').value),
+        year_end: parseInt(document.getElementById('pYearEnd').value),
+        donor_info: document.getElementById('pDonor').value,
+        condition: 'Grade A Tested'
+      };
+
+      try {
+        const res = await fetch('/api/admin/parts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Secret': secret
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          alert('Part successfully added to database!');
+          e.target.reset();
+        } else {
+          alert('Unauthorized or database error. Check secret key.');
+        }
+      } catch (err) {
+        alert('Network error communicating with API.');
+      }
     });
   </script>
 </body>
