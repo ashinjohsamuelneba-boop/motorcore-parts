@@ -35,8 +35,8 @@ export default {
       try {
         const p = await request.json();
         await env.DB.prepare(
-          'INSERT INTO parts (title, stock_id, oem_number, make, model, year_start, year_end, condition, donor_info, price, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        ).bind(p.title, p.stock_id, p.oem_number, p.make, p.model, p.year_start, p.year_end, p.condition, p.donor_info, p.price, p.image_url || '').run();
+          'INSERT INTO parts (title, stock_id, oem_number, make, model, year_start, year_end, condition, donor_info, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        ).bind(p.title, p.stock_id, p.oem_number, p.make, p.model, p.year_start, p.year_end, p.condition, p.donor_info, p.price).run();
 
         return new Response(JSON.stringify({ success: true }), { status: 201 });
       } catch (e) {
