@@ -2,7 +2,6 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // GET /api/parts - Load All Inventory
     if (url.pathname === '/api/parts' && request.method === 'GET') {
       try {
         const { results } = await env.DB.prepare('SELECT * FROM parts ORDER BY id DESC').all();
@@ -14,7 +13,6 @@ export default {
       }
     }
 
-    // POST /api/quotes - Submit Customer Request
     if (url.pathname === '/api/quotes' && request.method === 'POST') {
       try {
         const body = await request.json();
@@ -28,7 +26,6 @@ export default {
       }
     }
 
-    // POST /api/admin/parts - Add New Part (Admin)
     if (url.pathname === '/api/admin/parts' && request.method === 'POST') {
       const secret = request.headers.get('X-Admin-Secret');
       if (secret !== 'motorcore-admin-2026') {
@@ -38,8 +35,8 @@ export default {
       try {
         const p = await request.json();
         await env.DB.prepare(
-          'INSERT INTO parts (title, stock_id, oem_number, make, model, year_start, year_end, condition, donor_info, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        ).bind(p.title, p.stock_id, p.oem_number, p.make, p.model, p.year_start, p.year_end, p.condition, p.donor_info, p.price).run();
+          'INSERT INTO parts (title, stock_id, oem_number, make, model, year_start, year_end, condition, donor_info, price, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        ).bind(p.title, p.stock_id, p.oem_number, p.make, p.model, p.year_start, p.year_end, p.condition, p.donor_info, p.price, p.image_url || '').run();
 
         return new Response(JSON.stringify({ success: true }), { status: 201 });
       } catch (e) {
@@ -47,7 +44,6 @@ export default {
       }
     }
 
-    // Pass static assets through
     return env.ASSETS.fetch(request);
   }
 };
