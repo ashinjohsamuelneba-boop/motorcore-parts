@@ -2,7 +2,6 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Public API: Fetch Inventory
     if (url.pathname === '/api/parts' && request.method === 'GET') {
       try {
         const { results } = await env.DB.prepare('SELECT * FROM parts ORDER BY id DESC').all();
@@ -14,7 +13,6 @@ export default {
       }
     }
 
-    // Public API: Submit Quote
     if (url.pathname === '/api/quotes' && request.method === 'POST') {
       try {
         const body = await request.json();
@@ -28,7 +26,6 @@ export default {
       }
     }
 
-    // Admin API: Add Part
     if (url.pathname === '/api/admin/parts' && request.method === 'POST') {
       const secret = request.headers.get('X-Admin-Secret');
       if (secret !== 'motorcore-admin-2026') {
