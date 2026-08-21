@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MotorCore Parts — Quality Automotive Components &amp; Direct Support</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Responsive adjustment for floating widget to avoid covering inputs */
+    .chat-widget-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 15px;
+      z-index: 999;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    @media (max-width: 480px) {
+      .chat-widget-btn span.widget-text {
+        display: none; /* Collapses to an icon on mobile screens */
+      }
+      .chat-widget-btn {
+        padding: 12px;
+        border-radius: 50%;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -14,19 +43,19 @@
     </div>
   </header>
 
-  <main class="container main-content">
+  <main class="container main-content" style="padding-bottom: 80px;">
 
     <!-- Trust Badges Bar -->
     <section class="trust-bar" aria-label="Key selling points">
-      <div class="trust-item">📦 Direct OEM &amp; Quality Aftermarket Stock</div>
-      <div class="trust-item">⚡ Fast Quote Turnaround &amp; Order Processing</div>
+      <div class="trust-item">📦 Tested OEM &amp; Quality Aftermarket Stock</div>
+      <div class="trust-item">🛡️ 90-Day Fitment &amp; Parts Warranty</div>
       <div class="trust-item">💬 SMS Support: <strong>(213) 436-2939</strong></div>
     </section>
 
     <!-- Hero Banner -->
     <section class="hero">
       <h1>Find Genuine Automotive Parts</h1>
-      <p>Select your vehicle or search our inventory. Need assistance? Submit a quote request and our parts team will follow up.</p>
+      <p>Select your vehicle or search our verified inventory. Need fitment assistance? Submit a quote request and our parts specialists will follow up immediately.</p>
     </section>
 
     <!-- Vehicle Filter Bar -->
@@ -70,37 +99,57 @@
     </section>
 
     <!-- Contact Highlight -->
-    <section class="contact-highlight">
-      <h2>Questions or Instant Orders?</h2>
-      <p>Reach out directly to our parts department for fitment verification and custom payment support.</p>
-      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; align-items: center; margin-top: 10px;">
-        <span><strong>Email:</strong> <a href="mailto:wallacechristopher117@gmail.com">wallacechristopher117@gmail.com</a></span>
-        <a href="sms:+12134362939" class="btn primary">💬 Text Us: (213) 436-2939</a>
+    <section class="contact-highlight" style="margin-bottom: 30px;">
+      <h2>Questions or Instant Fitment Check?</h2>
+      <p>Reach out directly to our parts department to confirm VIN compatibility and place direct custom orders.</p>
+      <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; align-items: center; margin-top: 15px;">
+        <span style="font-size: 0.9rem;"><strong>Email:</strong> <a href="mailto:wallacechristopher117@gmail.com" style="color: #3b82f6;">wallacechristopher117@gmail.com</a></span>
+        <a href="sms:+12134362939" class="btn primary" style="padding: 8px 16px;">💬 Text Us: (213) 436-2939</a>
       </div>
     </section>
 
     <!-- Parts Inventory Grid -->
     <section>
-      <h2 class="section-title">Available Stock</h2>
+      <h2 class="section-title">Verified Inventory Stock</h2>
       <div id="partsGrid" class="parts-grid">
-        <article class="part-card">
+        
+        <!-- Standard Static Listing -->
+        <article class="part-card" style="border: 1px solid rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; background: #1e293b;">
           <div class="part-card-info">
-            <span class="badge">In Stock</span>
-            <h3>OEM Alternator Assembly</h3>
-            <p class="part-meta">Part #: ALT-8921 | Fits: 2017–2021 Ford F-150</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.75rem;">IN STOCK & TESTED</span>
+              <span style="font-size: 0.8rem; color: #94a3b8;">Stock ID: #MC-8921-A</span>
+            </div>
+            
+            <h3 style="font-size: 1.25rem; margin-bottom: 6px;">OEM FoMoCo Heavy-Duty Alternator Assembly (200A)</h3>
+            <p class="part-meta" style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 12px;">
+              <strong>OEM Part #:</strong> GL-8824 / JL3Z-10346-A <br>
+              <strong>Fits:</strong> 2018–2021 Ford F-150 (3.5L EcoBoost & 5.0L V8)
+            </p>
+
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 8px; font-size: 0.85rem; color: #cbd5e1; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);">
+              <p style="margin-bottom: 4px;">✔ <strong>Condition:</strong> Bench-tested & fully operational (Grade A Used)</p>
+              <p style="margin-bottom: 4px;">✔ <strong>Donor Vehicle:</strong> 2019 Ford F-150 Lariat (42,100 Miles)</p>
+              <p>✔ <strong>Includes:</strong> 90-Day Standard Replacement Warranty</p>
+            </div>
           </div>
-          <div class="part-card-action">
-            <p class="part-price">$185.00</p>
-            <a href="#requestForm" class="btn secondary btn-block">Inquire / Order</a>
+
+          <div class="part-card-action" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+            <div>
+              <span style="font-size: 0.75rem; color: #94a3b8; display: block;">Special Price</span>
+              <p class="part-price" style="font-size: 1.4rem; font-weight: bold; color: #2563eb;">$185.00 <span style="font-size: 0.8rem; font-weight: normal; color: #94a3b8; text-decoration: line-through;">$260.00</span></p>
+            </div>
+            <a href="sms:+12134362939?body=Hi%2C%20I'm%20interested%20in%20Stock%20ID%20%23MC-8921-A%20(OEM%20Alternator)" class="btn primary" style="padding: 8px 16px; font-size: 0.9rem;">Order / Text Info</a>
           </div>
         </article>
+
       </div>
     </section>
 
     <!-- Custom Request Form -->
-    <section id="requestForm" class="form-card">
-      <h2>Can't find a part? Request a Quote</h2>
-      <p class="form-subtitle">Submit your vehicle details and part requirements — we'll verify fitment and get back to you with pricing.</p>
+    <section id="requestForm" class="form-card" style="margin-top: 50px;">
+      <h2>Can't find a part? Request a Custom Quote</h2>
+      <p class="form-subtitle">Submit your vehicle details and required part — our sourcing team will check nationwide yards and reply within 1 hour.</p>
       <form id="requestFormInner" novalidate>
         <div class="two">
           <div class="field">
@@ -118,30 +167,29 @@
             <input type="tel" id="reqPhone" name="reqPhone" placeholder="Phone Number" required>
           </div>
           <div class="field">
-            <label for="reqVehicle">Vehicle</label>
-            <input type="text" id="reqVehicle" name="reqVehicle" placeholder="Year / Make / Model (e.g. 2018 Ford F-150)" required>
+            <label for="reqVehicle">Vehicle &amp; VIN (Optional)</label>
+            <input type="text" id="reqVehicle" name="reqVehicle" placeholder="e.g. 2018 Ford F-150 / VIN Number" required>
           </div>
         </div>
         <div class="field">
           <label for="reqDetails">Part Details</label>
-          <textarea id="reqDetails" name="reqDetails" placeholder="Describe the part you need (OEM part numbers, VIN, or specific details if known)..." rows="3" required></textarea>
+          <textarea id="reqDetails" name="reqDetails" placeholder="Describe the part you need (e.g. Front Bumper Assembly, Transfer Case, Engine ECU)..." rows="3" required></textarea>
         </div>
         <button type="submit" class="btn primary btn-block">Submit Quote Request</button>
       </form>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" style="padding-bottom: 40px;">
     <p>&copy; <span id="footerYear"></span> MotorCore Parts. All rights reserved.</p>
     <p class="footer-note">Contact: wallacechristopher117@gmail.com | Text/SMS: (213) 436-2939</p>
   </footer>
 
   <!-- Floating Chat Widget -->
-  <div id="chatWidget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-    <a href="sms:+12134362939" style="display: flex; align-items: center; gap: 8px; background: #2563eb; color: #ffffff; padding: 12px 20px; border-radius: 30px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,0.4); font-size: 0.95rem;">
-      <span style="font-size: 1.2rem;">💬</span> Text Parts Specialist
-    </a>
-  </div>
+  <a href="sms:+12134362939" class="chat-widget-btn">
+    <span style="font-size: 1.2rem;">💬</span>
+    <span class="widget-text">Text Parts Specialist</span>
+  </a>
 
   <script src="app.js"></script>
   <script>
