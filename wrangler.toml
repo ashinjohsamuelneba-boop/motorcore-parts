@@ -1,0 +1,8 @@
+name = "motorcore-parts"
+main = "_worker.js"
+compatibility_date = "2026-08-21"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "motorcore-parts-db"
+database_id = "your-database-id-here"
