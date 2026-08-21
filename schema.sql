@@ -36,3 +36,8 @@ CREATE TABLE IF NOT EXISTS admins (
     password_hash TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- Sample Initial Inventory for Ford, Chevrolet, and Toyota
+INSERT INTO parts (id, sku, name, category, vehicle_make, vehicle_model, vehicle_year_start, vehicle_year_end, price, stock_quantity, image_url, condition, availability) VALUES
+('part_1', 'BR-FORD-150', 'Front Ceramic Brake Pads', 'Brakes', 'Ford', 'F-150', 2015, 2020, 45.99, 10, 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=400&q=80', 'New', 'In Stock'),
+('part_2', 'ALT-CHEV-SIL', 'High-Output Alternator', 'Electrical', 'Chevrolet', 'Silverado', 2014, 2018, 189.50, 4, 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=400&q=80', 'New', 'In Stock'),
+('part_3', 'SUS-TOY-CAM', 'Front Suspension Strut Assembly', 'Suspension', 'Toyota', 'Camry', 2012, 2017, 95.00, 7, 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?auto=format&fit=crop&w=400&q=80', 'New', 'In Stock');
